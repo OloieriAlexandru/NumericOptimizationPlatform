@@ -1,9 +1,9 @@
 package optimizationAlgorithms;
 
-import functions.IFunction;
+import functions.Function;
 
 public interface IOptimizationAlgorithm {
     double run();
     double run(int generationsLimit);
-    void setFunction(IFunction function);
+    void setFunction(Function function);
 }

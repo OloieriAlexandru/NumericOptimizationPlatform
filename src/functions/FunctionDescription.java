@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class FunctionDescription {
     private FunctionArgumentsType           functionArgumentsType;
     private String                          name;
-    private IFunction                       functionObject;
+    private Function functionObject;
     private int                             optimizationType;
     private ArrayList<FunctionArgument>     arguments = new ArrayList<>();
 
@@ -17,7 +17,7 @@ public class FunctionDescription {
         functionArgumentsType = argumentsType;
     }
 
-    public void setFunction(IFunction function){
+    public void setFunction(Function function){
         functionObject = function;
     }
 
@@ -29,7 +29,7 @@ public class FunctionDescription {
         return name;
     }
 
-    public IFunction getFunction() {
+    public Function getFunction() {
         return functionObject;
     }
 

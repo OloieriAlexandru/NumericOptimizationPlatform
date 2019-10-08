@@ -5,12 +5,9 @@ import optimizationAlgorithms.CandidateHCSA;
 
 import java.util.ArrayList;
 
-public class ExpressionParsedFunction implements IFunction {
+public class ExpressionParsedFunction extends Function {
     private String              expression;
     private ArrayList<String>   arguments;
-
-    private double          minVals[];
-    private double          maxVals[];
 
     public String[] getArgumentsNames(){
         String[] variableNames = new String[arguments.size()];
@@ -25,7 +22,7 @@ public class ExpressionParsedFunction implements IFunction {
         int args = getArgumentsCount();
         int[] bitLens = new int[args];
         for (int i=0;i<args;++i){
-            bitLens[i] = CandidateHCSA.calculateBitLen(minVals[0],maxVals[0],precision);
+            bitLens[i] = CandidateHCSA.calculateBitLen(minVals[i],maxVals[i],precision);
         }
         return bitLens;
     }
@@ -36,15 +33,10 @@ public class ExpressionParsedFunction implements IFunction {
         double[]    retMin = new double[args];
         double[]    retMax = new double[args];
         for (int i=0;i<args;++i){
-            retMin[i] = minVals[0];
-            retMax[i] = maxVals[0];
+            retMin[i] = minVals[i];
+            retMax[i] = maxVals[i];
         }
         return new Pair<>(retMin,retMax);
-    }
-
-    @Override
-    public Pair<Double, Double> getFunctionArgumentLimits(int index) {
-        return new Pair<>(minVals[index], maxVals[index]);
     }
 
     public ExpressionParsedFunction(String expr){
@@ -70,21 +62,5 @@ public class ExpressionParsedFunction implements IFunction {
         }  else {
             return ExpressionEvaluator.evaluate(expression, args[0]);
         }
-    }
-
-    @Override
-    public void addLimits(double[] minValues, double[] maxValues) {
-        minVals = minValues.clone();
-        maxVals = maxValues.clone();
-    }
-
-    @Override
-    public void updateMinLimit(int index, double val) {
-        minVals[index] = val;
-    }
-
-    @Override
-    public void updateMaxLimit(int index, double val) {
-        maxVals[index] = val;
     }
 }

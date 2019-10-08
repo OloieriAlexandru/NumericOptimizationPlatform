@@ -34,10 +34,10 @@ public class FunctionFactory {
         return predefinedFunctionsName;
     }
 
-    public IFunction getFunction(String str){
+    public Function getFunction(String str){
         str = str.toLowerCase();
 
-        IFunction predefinedFunction = getPredefinedFunction(str);
+        Function predefinedFunction = getPredefinedFunction(str);
 
         if (predefinedFunction != null){
             return predefinedFunction;
@@ -50,7 +50,7 @@ public class FunctionFactory {
         return null;
     }
 
-    public static IFunction getPredefinedFunction(String str){
+    public static Function getPredefinedFunction(String str){
         str = str.toLowerCase();
         for (FunctionDescription predefinedFunction : predefinedFunctions){
             if (predefinedFunction.getName().toLowerCase().equals(str)){
@@ -64,7 +64,7 @@ public class FunctionFactory {
         str = str.toLowerCase();
         for (FunctionDescription predefinedFunction : predefinedFunctions){
             if (predefinedFunction.getName().toLowerCase().equals(str)){
-                IFunction function = getClonedFunction(predefinedFunction);
+                Function function = getClonedFunction(predefinedFunction);
                 predefinedFunction.setFunction(function);
                 return predefinedFunction;
             }
@@ -72,12 +72,12 @@ public class FunctionFactory {
         return null;
     }
 
-    private static IFunction getClonedFunction(FunctionDescription functionDescription){
+    private static Function getClonedFunction(FunctionDescription functionDescription){
         if (functionDescription == null){
             return null;
         }
         String functionName = functionDescription.getName().toLowerCase();
-        IFunction function;
+        Function function;
         if (functionName.equals("rastrigin")){
             function = new FRastrigin();
         } else if (functionName.equals("beale")){

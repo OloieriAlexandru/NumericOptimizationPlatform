@@ -147,7 +147,7 @@ public class PanelInputs extends JPanel {
         functionMinValueSpinner = new JSpinner(functionMinValueModel);
         functionMinValueSpinner.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
         functionMinValueSpinner.addChangeListener(e -> {
-            IFunction functionReference = GlobalState.functionUsed.getFunction();
+            Function functionReference = GlobalState.functionUsed.getFunction();
             if (GlobalState.functionUsed.getArgumentsType() == FunctionArgumentsType.SameIntervals){
                 functionReference.updateMinLimit(0, (double)functionMinValueSpinner.getValue());
             } else if (GlobalState.functionUsed.getArgumentsType() == FunctionArgumentsType.DifferentIntervals){
@@ -166,7 +166,7 @@ public class PanelInputs extends JPanel {
         functionMaxValueSpinner = new JSpinner(functionMaxValueModel);
         functionMaxValueSpinner.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
         functionMaxValueSpinner.addChangeListener(e -> {
-            IFunction functionReference = GlobalState.functionUsed.getFunction();
+            Function functionReference = GlobalState.functionUsed.getFunction();
             if (GlobalState.functionUsed.getArgumentsType() == FunctionArgumentsType.SameIntervals){
                 functionReference.updateMaxLimit(0, (double)functionMaxValueSpinner.getValue());
             } else if (GlobalState.functionUsed.getArgumentsType() == FunctionArgumentsType.DifferentIntervals){

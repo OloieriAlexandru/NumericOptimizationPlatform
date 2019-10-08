@@ -1,13 +1,13 @@
 package optimizationAlgorithms;
 
-import functions.IFunction;
+import functions.Function;
 import main.GlobalState;
 import main.UserInterface;
 
 import java.util.ArrayList;
 
 public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
-    private IFunction               f;
+    private Function f;
     private UserInterface           ui;
 
     HillClimbingBestImprovement(UserInterface userInterface){
@@ -40,7 +40,7 @@ public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
     }
 
     @Override
-    public void setFunction(IFunction function) {
+    public void setFunction(Function function) {
         f = function;
     }
 }

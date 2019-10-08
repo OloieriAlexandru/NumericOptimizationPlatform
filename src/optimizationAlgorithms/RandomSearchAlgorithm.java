@@ -1,12 +1,12 @@
 package optimizationAlgorithms;
 
-import functions.IFunction;
+import functions.Function;
 import javafx.util.Pair;
 import main.GlobalState;
 import main.UserInterface;
 
 public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
-    private IFunction       f;
+    private Function f;
     private UserInterface   ui;
     private double[]        currentVariablesStates;
     private double[]        functionMinValues;
@@ -53,7 +53,7 @@ public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
     }
 
     @Override
-    public void setFunction(IFunction function) {
+    public void setFunction(Function function) {
         f = function;
     }
 }

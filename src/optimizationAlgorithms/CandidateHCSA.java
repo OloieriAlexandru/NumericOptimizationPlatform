@@ -1,6 +1,6 @@
 package optimizationAlgorithms;
 
-import functions.IFunction;
+import functions.Function;
 import javafx.util.Pair;
 import main.GlobalState;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class CandidateHCSA {
-    private IFunction       f;
+    private Function f;
     private int[]           bitwiseRepresentation;
     private int[]           bitLens;
     private double[]        decimalRepresentation;
@@ -17,7 +17,7 @@ public class CandidateHCSA {
     private int             argsCount;
     private Random          random;
 
-    CandidateHCSA(IFunction function, int prec){
+    CandidateHCSA(Function function, int prec){
         f = function;
         argsCount = function.getArgumentsCount();
         Pair<double[],double[]> functionLimits = function.getArgumentsLimits();

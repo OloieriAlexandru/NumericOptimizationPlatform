@@ -1,6 +1,6 @@
 package optimizationAlgorithms;
 
-import functions.IFunction;
+import functions.Function;
 import main.UserInterface;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Random;
 public class GeneticAlgorithmSimulator implements IOptimizationAlgorithm{
     private IGeneticAlgorithm           geneticAlgorithm;
     private UserInterface               ui;
-    private IFunction                   f;
+    private Function f;
 
     public GeneticAlgorithmSimulator(IGeneticAlgorithm ga, UserInterface userInterface){
         geneticAlgorithm = ga;
@@ -28,7 +28,7 @@ public class GeneticAlgorithmSimulator implements IOptimizationAlgorithm{
     }
 
     @Override
-    public void setFunction(IFunction function) {
+    public void setFunction(Function function) {
         f = function;
     }
 

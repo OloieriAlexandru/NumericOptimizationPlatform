@@ -2,13 +2,13 @@ package main;
 
 import functions.FunctionDescription;
 
-import functions.IFunction;
+import functions.Function;
 import optimizationAlgorithms.OptimizationAlgorithmDescription;
 
 public class GlobalState {
     public static OptimizationAlgorithmDescription      optimizationAlgorithmDescription;
     public static FunctionDescription                   functionUsed;
-    public static IFunction                             function;
+    public static Function function;
     public static double                                bestValue;
     public static double                                worstValue;
     public static double                                mean;

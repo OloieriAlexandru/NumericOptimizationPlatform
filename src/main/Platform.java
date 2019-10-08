@@ -3,8 +3,7 @@ package main;
 import commandline.CommandLine;
 import commandline.CommandOptions;
 import commandline.Commands;
-import functions.FunctionFactory;
-import functions.IFunction;
+import functions.Function;
 import optimizationAlgorithms.*;
 
 public class Platform {
@@ -46,7 +45,7 @@ public class Platform {
         if (GlobalState.functionUsed == null){
             return;
         }
-        IFunction function = GlobalState.functionUsed.getFunction();
+        Function function = GlobalState.functionUsed.getFunction();
         optimizationAlgorithm = optimizationAlgorithmFactory.getOptimizationAlgorithm(GlobalState.optimizationAlgorithmDescription.getLongName());
         if (function == null || optimizationAlgorithm == null){
             return;
