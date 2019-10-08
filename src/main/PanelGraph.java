@@ -133,7 +133,7 @@ public class PanelGraph extends JPanel {
         Set<Integer> ySegments = computeSegmentsOnY(bestCandidates, minReq, yBottom, yDiff, maxValue, maxDiff);
 
         for (int i=0;i<bestCandidates.size();++i){
-            int x = xLeft + (xRight-4-xLeft)/totalGenerationsCount * i + 20;
+            int x = xLeft + (int)((double)(xRight-4-xLeft)/(double)totalGenerationsCount * i) + 8;
             int y;
             if (GlobalState.optimizationType == 1){
                 y = (int)(yTop + 10 + yDiff * (maxValue - bestCandidates.get(i)) / maxDiff);
@@ -194,7 +194,7 @@ public class PanelGraph extends JPanel {
         g2.drawLine(xLeft,yTop,xLeft,yBottom+4);
 
         for (Integer cx : xSegments){
-            int x = xLeft + (xRight-4-xLeft)/generationsCount * cx + 20;
+            int x = xLeft + (int)((double)(xRight-4-xLeft)/(double)generationsCount * cx) + 8;
             int cnt = cx + 1;
             g2.drawLine(x, yBottom-4, x, yBottom + 4);
             g2.drawString(Integer.toString(cnt),x-4,yBottom+20);

@@ -128,7 +128,7 @@ public class PanelInputs extends JPanel {
         iterationsLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
         functionsPropertiesPanel.add(iterationsLabel, constraints);
         constraints.gridx = 1;
-        SpinnerModel iterationsSpinnerModel = new SpinnerNumberModel(100, 1, 1000, 5);
+        SpinnerModel iterationsSpinnerModel = new SpinnerNumberModel(100, 1, 10000, 5);
         JSpinner iterationsSpinner = new JSpinner(iterationsSpinnerModel);
         iterationsSpinner.addChangeListener(e -> {
             GlobalState.iterationsCount = (int) iterationsSpinner.getValue();
@@ -259,7 +259,6 @@ public class PanelInputs extends JPanel {
                 for (int i=0;i<argsNames.length;++i){
                     differentIntervalsFunctionComboBox.addItem(argsNames[i]);
                 }
-                System.out.println(differentIntervalsFunctionComboBox.getItemCount());
                 differentIntervalsFunctionComboBox.setSelectedIndex(0);
                 differentIntervalsFunctionComboBox.setVisible(true);
                 Pair<Double, Double> limits = function.getFunctionLimits();

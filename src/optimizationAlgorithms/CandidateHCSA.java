@@ -35,9 +35,6 @@ public class CandidateHCSA {
         decimalRepresentation = new double[argsCount];
 
         random = new Random();
-
-        System.out.println(Arrays.toString(minValues));
-        System.out.println(Arrays.toString(maxValues));
     }
 
     public static int calculateBitLen(double minValue, double maxValue, int precision){

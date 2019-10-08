@@ -5,11 +5,16 @@ import functions.FunctionDescription;
 import functions.Function;
 import optimizationAlgorithms.OptimizationAlgorithmDescription;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class GlobalState {
     public static OptimizationAlgorithmDescription      optimizationAlgorithmDescription;
     public static FunctionDescription                   functionUsed;
-    public static Function function;
+    public static Function                              function;
     public static double                                bestValue;
+    public static double[]                              bestValueArguments;
+    public static double[]                              allBestValueArguments;
     public static double                                worstValue;
     public static double                                mean;
     public static double                                sum;
@@ -31,10 +36,6 @@ public class GlobalState {
         optimizationAlgorithmDescription = oad;
     }
 
-    public static void updateUsedFunction(FunctionDescription description){
-        functionUsed = description;
-    }
-
     public static void setTotalRuns(int runsCount){
         totalRuns = runsCount;
     }
@@ -44,10 +45,12 @@ public class GlobalState {
             bestValue = worstValue = value;
             standardDeviation = 0;
             wasReset = false;
+            allBestValueArguments = bestValueArguments.clone();
         } else {
             if (optimizationType == 1){
                 if (value < bestValue){
                     bestValue = value;
+                    allBestValueArguments = bestValueArguments.clone();
                 }
                 if (value > worstValue){
                     worstValue = value;
@@ -55,6 +58,7 @@ public class GlobalState {
             } else {
                 if (value > bestValue){
                     bestValue = value;
+                    allBestValueArguments = bestValueArguments.clone();
                 }
                 if (value < worstValue){
                     worstValue = value;
@@ -76,15 +80,39 @@ public class GlobalState {
         return Double.MIN_VALUE;
     }
 
-    public static double getBetterValue(double bestValue, double currentBest){
+    public static double roundDoubleValueToXDecimals(double value, int x){
+        if (value < 1e-6){
+            return 0.0;
+        }
+        return new BigDecimal(value).setScale(x, RoundingMode.HALF_EVEN).doubleValue();
+    }
+
+    public static double roundDoubleValueToTwoDecimals(double value){
+        return roundDoubleValueToXDecimals(value, 2);
+    }
+
+    public static void roundDoubleArrayToTwoDecimals(double[] arr){
+        for (int i=0;i<arr.length;++i){
+            arr[i] = roundDoubleValueToXDecimals(arr[i], 5);
+        }
+    }
+
+    private static void updateBestValueArgumentsArray(double[] args){
+        roundDoubleArrayToTwoDecimals(args);
+        bestValueArguments = args.clone();
+    }
+
+    public static double getBetterValue(double bestValue, double currentBest, double[] args){
         double ans = bestValue;
         if (optimizationType == 1){
             if (currentBest < ans){
                 ans = currentBest;
+                updateBestValueArgumentsArray(args);
             }
         } else {
             if (currentBest > ans) {
                 ans = currentBest;
+                updateBestValueArgumentsArray(args);
             }
         }
         return ans;

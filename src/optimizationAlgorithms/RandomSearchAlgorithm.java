@@ -5,14 +5,12 @@ import javafx.util.Pair;
 import main.GlobalState;
 import main.UserInterface;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
-    private Function f;
+    private Function        f;
     private UserInterface   ui;
-    private double[]        currentVariablesStates;
-    private double[]        functionMinValues;
-    private double[]        functionMaxValues;
-    private double          bestValue;
-    private static int      randomSearchIterations = 100;
 
     RandomSearchAlgorithm(UserInterface userInterface){
         ui = userInterface;
@@ -23,31 +21,30 @@ public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
         return run(GlobalState.iterationsCount);
     }
 
-    private void recursiveRandomSearch(int variableIndex){
-        if (variableIndex == f.getArgumentsCount()){
-            // am generat random toate variabilele
-            double currentFunctionValue = f.evaluate(currentVariablesStates);
-            GlobalState.getBetterValue(bestValue, currentFunctionValue);
-            return;
-        }
-        double epsilon = ( functionMaxValues[variableIndex] - functionMinValues[variableIndex] ) / (double) randomSearchIterations;
-        currentVariablesStates[variableIndex] = functionMinValues[variableIndex];
-        while (currentVariablesStates[variableIndex] <= functionMaxValues[variableIndex]){
-            recursiveRandomSearch(variableIndex + 1);
-            currentVariablesStates[variableIndex] += epsilon;
-        }
-    }
-
     @Override
     public double run(int generationsLimit) {
-        currentVariablesStates = new double[f.getArgumentsCount()];
-
+        ArrayList<Double> bestValues = new ArrayList<>();
         Pair<double[], double[]> functionLimits = f.getArgumentsLimits();
-        functionMinValues = functionLimits.getKey();
-        functionMaxValues = functionLimits.getValue();
-        bestValue = GlobalState.getTheWorstValue();
+        double[] functionMinValues = functionLimits.getKey();
+        double[] functionMaxValues = functionLimits.getValue();
 
-        recursiveRandomSearch(0);
+        int args = f.getArgumentsCount();
+        double[] functionArgs = new double[args];
+        double bestValue = GlobalState.getTheWorstValue();
+
+        Random r = new Random();
+
+        for (int i=0;i<generationsLimit;++i){
+            for (int j=0;j<args;++j){
+                functionArgs[j] = functionMinValues[j] + (functionMaxValues[j] - functionMinValues[j]) * r.nextDouble();
+            }
+            double res = f.evaluate(functionArgs);
+            bestValue = GlobalState.getBetterValue(bestValue, res, functionArgs);
+
+            bestValues.add(bestValue);
+
+            ui.graph.printGenerations(bestValues, generationsLimit, 1);
+        }
 
         return bestValue;
     }

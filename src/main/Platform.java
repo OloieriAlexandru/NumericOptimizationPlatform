@@ -6,6 +6,8 @@ import commandline.Commands;
 import functions.Function;
 import optimizationAlgorithms.*;
 
+import java.util.Arrays;
+
 public class Platform {
     private UserInterface                       ui;
     private CommandLine                         cmd;
@@ -62,6 +64,7 @@ public class Platform {
                 GlobalState.incrementCurrentRun();
             }
         }
+        ui.consoleOutput.addLine("Best value found: \nValue = " + GlobalState.roundDoubleValueToXDecimals(GlobalState.bestValue, 5) + "\nPoint: " + Arrays.toString(GlobalState.allBestValueArguments) + "\n");
     }
 
     private void commandToggleConsoleOutput(CommandOptions commandOptions){

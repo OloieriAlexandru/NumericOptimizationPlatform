@@ -35,7 +35,7 @@ public class HillClimbingFirstImprovement implements IOptimizationAlgorithm {
 
             while (currentCandidate.hillClimbingFirstImprovementExploration());
 
-            bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest());
+            bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest(), currentCandidate.getDecimalRepresentationOfBestCandidate());
             bestValues.add(bestValue);
 
             ui.graph.printGenerations(bestValues, generationsLimit, 1);
