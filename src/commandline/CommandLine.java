@@ -20,6 +20,7 @@ public class CommandLine {
     private void initCommandLine() {
         commandDescriptions.add(new CommandDescription("run", Commands.RUN));
         commandDescriptions.get(commandDescriptions.size()-1).addNumberOption("-runs:", 1);
+        commandDescriptions.get(commandDescriptions.size()-1).addBooleanOption("-disable-graph", false);
 
         commandDescriptions.add(new CommandDescription("toggle", Commands.TOGGLE_CONSOLE_OUTPUT));
 

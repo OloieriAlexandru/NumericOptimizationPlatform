@@ -3,16 +3,17 @@ package functions;
 import main.PanelConsoleOutput;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 class ExpressionEvaluationState{
-    double xVal;
+    Map<String,Double> variableLimits;
     String expr;
     int index;
 
-    ExpressionEvaluationState(String e, int i, double x){
+    ExpressionEvaluationState(String e, int i, Map<String,Double> varLimits){
         expr = e;
         index = i;
-        xVal = x;
+        variableLimits = varLimits;
     }
 }
 
@@ -64,16 +65,24 @@ public class ExpressionEvaluator {
             ++st.index;
             return t;
         }
-        if (st.index < st.expr.length() && st.expr.charAt(st.index) == 'x'){
-            ++st.index;
-            return st.xVal;
+        if (st.index < st.expr.length() && st.expr.charAt(st.index) >= '0' && st.expr.charAt(st.index) <= '9'){
+            double ans = 0;
+            while (st.index < st.expr.length() && st.expr.charAt(st.index) >= '0' && st.expr.charAt(st.index) <= '9'){
+                ans = ans * 10 + st.expr.charAt(st.index)-'0';
+                ++st.index;
+            }
+            return ans;
         }
-        double ans = 0;
-        while (st.index < st.expr.length() && st.expr.charAt(st.index) >= '0' && st.expr.charAt(st.index) <= '9'){
-            ans = ans * 10 + st.expr.charAt(st.index)-'0';
+        StringBuilder var = new StringBuilder();
+        while (st.index < st.expr.length() && !isRservedSymbol(st.expr.charAt(st.index))){
+            var.append(st.expr.charAt(st.index));
             ++st.index;
         }
-        return ans;
+        String currVar = var.toString();
+        if (!st.variableLimits.containsKey(currVar)){
+            return 0.0;
+        }
+        return st.variableLimits.get(currVar);
     }
 
     private static double evaluateMulDiv(ExpressionEvaluationState st){
@@ -108,8 +117,8 @@ public class ExpressionEvaluator {
         return t1;
     }
 
-    public static double evaluate(String expression, double valueOfX){
-        ExpressionEvaluationState state = new ExpressionEvaluationState(expression, 0, valueOfX);
+    public static double evaluate(String expression, Map<String,Double> variableLimits){
+        ExpressionEvaluationState state = new ExpressionEvaluationState(expression, 0, variableLimits);
         return evaluateAddSub(state);
     }
 }

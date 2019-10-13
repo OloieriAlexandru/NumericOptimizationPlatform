@@ -81,7 +81,7 @@ public class GlobalState {
     }
 
     public static double roundDoubleValueToXDecimals(double value, int x){
-        if (value < 1e-6){
+        if (Math.abs(value) < 1e-9){
             return 0.0;
         }
         return new BigDecimal(value).setScale(x, RoundingMode.HALF_EVEN).doubleValue();

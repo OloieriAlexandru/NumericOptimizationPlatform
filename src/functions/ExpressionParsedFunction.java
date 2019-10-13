@@ -4,6 +4,8 @@ import javafx.util.Pair;
 import optimizationAlgorithms.CandidateHCSA;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExpressionParsedFunction extends Function {
     private String              expression;
@@ -57,10 +59,13 @@ public class ExpressionParsedFunction extends Function {
 
     @Override
     public double evaluate(double... args) {
-        if (args.length == 0){
-            return ExpressionEvaluator.evaluate(expression, 1.0);
-        }  else {
-            return ExpressionEvaluator.evaluate(expression, args[0]);
+        if (args.length != arguments.size()){
+            return 0.0;
         }
+        Map<String,Double> variableLimits = new HashMap<>();
+        for (int i=0;i<arguments.size();++i) {
+            variableLimits.put(arguments.get(i), args[i]);
+        }
+        return ExpressionEvaluator.evaluate(expression, variableLimits);
     }
 }

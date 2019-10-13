@@ -18,12 +18,12 @@ public class GeneticAlgorithmSimulator implements IOptimizationAlgorithm{
     }
 
     @Override
-    public double run() {
-        return run(100);
+    public double run(boolean drawGraph) {
+        return run(100, drawGraph);
     }
 
     @Override
-    public double run(int generationsLimit) {
+    public double run(int generationsLimit, boolean drawGraph) {
         return runGenericGeneticAlgorithm(generationsLimit);
     }
 

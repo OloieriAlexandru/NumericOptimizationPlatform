@@ -17,12 +17,12 @@ public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run() {
-        return run(GlobalState.iterationsCount);
+    public double run(boolean drawGraph) {
+        return run(GlobalState.iterationsCount, drawGraph);
     }
 
     @Override
-    public double run(int generationsLimit) {
+    public double run(int generationsLimit, boolean drawGraph) {
         ArrayList<Double> bestValues = new ArrayList<>();
         Pair<double[], double[]> functionLimits = f.getArgumentsLimits();
         double[] functionMinValues = functionLimits.getKey();

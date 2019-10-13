@@ -15,12 +15,12 @@ public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run() {
-        return run(GlobalState.iterationsCount);
+    public double run(boolean drawGraph) {
+        return run(GlobalState.iterationsCount, drawGraph);
     }
 
     @Override
-    public double run(int generationsLimit) {
+    public double run(int generationsLimit, boolean drawGraph) {
         ArrayList<Double>       bestValues = new ArrayList<>();
         CandidateHCSA           currentCandidate = new CandidateHCSA(f, 5);
         Double                  bestValue = GlobalState.getTheWorstValue();
@@ -31,9 +31,11 @@ public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
             while (currentCandidate.hillClimbingBestImprovementExploration());
 
             bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest(), currentCandidate.getDecimalRepresentationOfBestCandidate());
-            bestValues.add(bestValue);
 
-            ui.graph.printGenerations(bestValues, generationsLimit, 1);
+            if (drawGraph){
+                bestValues.add(bestValue);
+                ui.graph.printGenerations(bestValues, generationsLimit, 0);
+            }
         }
 
         return bestValue;

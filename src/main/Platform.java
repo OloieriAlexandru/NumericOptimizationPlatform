@@ -7,6 +7,7 @@ import functions.Function;
 import optimizationAlgorithms.*;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class Platform {
     private UserInterface                       ui;
@@ -56,15 +57,20 @@ public class Platform {
         int runs = commandOptions.getNumberValue("-runs:");
         GlobalState.reset();
         GlobalState.setTotalRuns(runs);
+        Date start = new Date();
+        ui.graph.paintBorders();
         for (int i=0;i<runs;++i){
-            double curr = optimizationAlgorithm.run();
+            double curr = optimizationAlgorithm.run(!commandOptions.getBooleanValue("-disable-graph"));
             GlobalState.addResultValue(curr);
             ui.graph.printInformation();
             if (i+1 < runs){
                 GlobalState.incrementCurrentRun();
             }
         }
-        ui.consoleOutput.addLine("Best value found: \nValue = " + GlobalState.roundDoubleValueToXDecimals(GlobalState.bestValue, 5) + "\nPoint: " + Arrays.toString(GlobalState.allBestValueArguments) + "\n");
+        Date end = new Date();
+        double duration = (end.getTime()-start.getTime()) / 1000.0;
+        ui.consoleOutput.addLine("Best value found: \nValue = " + GlobalState.roundDoubleValueToXDecimals(GlobalState.bestValue, 5) + "\nPoint: " + Arrays.toString(GlobalState.allBestValueArguments));
+        ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToTwoDecimals(duration)) + "seconds \n");
     }
 
     private void commandToggleConsoleOutput(CommandOptions commandOptions){
