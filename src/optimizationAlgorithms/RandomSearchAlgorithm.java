@@ -41,9 +41,10 @@ public class RandomSearchAlgorithm implements IOptimizationAlgorithm {
             double res = f.evaluate(functionArgs);
             bestValue = GlobalState.getBetterValue(bestValue, res, functionArgs);
 
-            bestValues.add(bestValue);
-
-            ui.graph.printGenerations(bestValues, generationsLimit, 1);
+            if (drawGraph){
+                bestValues.add(bestValue);
+                ui.graph.printGenerations(bestValues, generationsLimit, 1);
+            }
         }
 
         return bestValue;

@@ -70,7 +70,10 @@ public class Platform {
         Date end = new Date();
         double duration = (end.getTime()-start.getTime()) / 1000.0;
         ui.consoleOutput.addLine("Best value found: \nValue = " + GlobalState.roundDoubleValueToXDecimals(GlobalState.bestValue, 5) + "\nPoint: " + Arrays.toString(GlobalState.allBestValueArguments));
-        ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToTwoDecimals(duration)) + "seconds \n");
+        ui.consoleOutput.addLine("Worst value found: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.worstValue, 5));
+        ui.consoleOutput.addLine("Mean: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.mean, 5));
+        ui.consoleOutput.addLine("Standard deviation: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.getStandardDeviation(), 5));
+        ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToXDecimals(duration, 5)) + "seconds \n");
     }
 
     private void commandToggleConsoleOutput(CommandOptions commandOptions){

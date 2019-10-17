@@ -7,11 +7,14 @@ import optimizationAlgorithms.OptimizationAlgorithmDescription;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GlobalState {
     public static OptimizationAlgorithmDescription      optimizationAlgorithmDescription;
     public static FunctionDescription                   functionUsed;
     public static Function                              function;
+    public static ArrayList<Double>                     resultsBestValues = new ArrayList<>();
     public static double                                bestValue;
     public static double[]                              bestValueArguments;
     public static double[]                              allBestValueArguments;
@@ -25,11 +28,13 @@ public class GlobalState {
     public static int                                   iterationsCount = 100;
     public static int                                   functionArguments = 5;
     public static int                                   optimizationType = 1; // 1 - minimization, 2 - maximization
+    public static double                                epsilon = 0.01;
 
     public static void reset(){
         wasReset = true;
         currentRun = 1;
         bestValue = worstValue = mean = sum = standardDeviation = 0;
+        resultsBestValues.clear();
     }
 
     public static void setOptimizationAlgorithmDescription(OptimizationAlgorithmDescription oad){
@@ -40,33 +45,50 @@ public class GlobalState {
         totalRuns = runsCount;
     }
 
-    public static void addResultValue(double value){
-        if (wasReset){
+    public static void addResultValue(double value) {
+        if (wasReset) {
             bestValue = worstValue = value;
             standardDeviation = 0;
             wasReset = false;
-            allBestValueArguments = bestValueArguments.clone();
+            if (bestValueArguments != null) {
+                allBestValueArguments = bestValueArguments.clone();
+            }
         } else {
-            if (optimizationType == 1){
-                if (value < bestValue){
+        if (optimizationType == 1) {
+            if (value < bestValue) {
                     bestValue = value;
-                    allBestValueArguments = bestValueArguments.clone();
+                    if (bestValueArguments != null) {
+                        allBestValueArguments = bestValueArguments.clone();
+                    }
                 }
-                if (value > worstValue){
+                if (value > worstValue) {
                     worstValue = value;
                 }
             } else {
-                if (value > bestValue){
+                if (value > bestValue) {
                     bestValue = value;
-                    allBestValueArguments = bestValueArguments.clone();
+                    if (bestValueArguments != null) {
+                        allBestValueArguments = bestValueArguments.clone();
+                    }
                 }
-                if (value < worstValue){
+                if (value < worstValue) {
                     worstValue = value;
                 }
             }
         }
         sum += value;
         mean = sum / currentRun;
+        resultsBestValues.add(value);
+    }
+
+    public static double getStandardDeviation(){
+        double sd = 0, mul;
+        for (int i=0;i<resultsBestValues.size();++i){
+            mul = resultsBestValues.get(i) - mean;
+            sd += mul * mul;
+        }
+        sd /= resultsBestValues.size();
+        return Math.sqrt(sd);
     }
 
     public static void incrementCurrentRun() {

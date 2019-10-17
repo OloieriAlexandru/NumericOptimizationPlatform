@@ -5,14 +5,18 @@ import javafx.util.Pair;
 import main.GlobalState;
 import main.UserInterface;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
     private Function f;
     private UserInterface ui;
     private double[]        currentVariablesStates;
     private double[]        functionMinValues;
     private double[]        functionMaxValues;
+    private double[]        epsilons;
     private double          bestValue;
-    private static int      bruteForceSearchIterations = 35;
+    private static int      bruteForceSearchIterations = 25;
 
     BruteForceSearchAlgorithm(UserInterface userInterface){
         ui = userInterface;
@@ -29,21 +33,26 @@ public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
             bestValue = GlobalState.getBetterValue(bestValue, currentFunctionValue, currentVariablesStates);
             return;
         }
-        double epsilon = ( functionMaxValues[variableIndex] - functionMinValues[variableIndex] ) / (double) bruteForceSearchIterations;
         currentVariablesStates[variableIndex] = functionMinValues[variableIndex];
         while (currentVariablesStates[variableIndex] <= functionMaxValues[variableIndex]){
             recursiveBruteForceSearch(variableIndex + 1);
-            currentVariablesStates[variableIndex] += epsilon;
+            currentVariablesStates[variableIndex] += epsilons[variableIndex];
         }
     }
 
     @Override
     public double run(int generationsLimit, boolean drawGraph) {
+        bruteForceSearchIterations = GlobalState.iterationsCount;
+
         currentVariablesStates = new double[f.getArgumentsCount()];
 
         Pair<double[], double[]> functionLimits = f.getArgumentsLimits();
         functionMinValues = functionLimits.getKey();
         functionMaxValues = functionLimits.getValue();
+        epsilons = new double[functionMaxValues.length];
+        for (int i=0;i<epsilons.length;++i){
+            epsilons[i] = ( functionMaxValues[i] - functionMinValues[i] ) / (double) bruteForceSearchIterations;
+        }
         bestValue = GlobalState.getTheWorstValue();
 
         recursiveBruteForceSearch(0);

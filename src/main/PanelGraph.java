@@ -202,6 +202,9 @@ public class PanelGraph extends JPanel {
     }
 
     private void computeSegmentsOnX(int generationsCount){
+        if (generationsCount < numberOfSegmentsOnX) {
+            return;
+        }
         ArrayList<Integer> diff = new ArrayList<>();
         int segLen = generationsCount / numberOfSegmentsOnX;
         int numLongSeg = generationsCount % numberOfSegmentsOnX;

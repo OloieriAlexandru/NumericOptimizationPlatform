@@ -84,6 +84,16 @@ public class FunctionFactory {
             function = new FBeale();
         } else if (functionName.equals("sixhump")){
             function = new FSixHumpCamel();
+        } else if (functionName.equals("rosenbrock")){
+            function = new FRosenbrock();
+        } else if (functionName.equals("sphere")){
+            function = new FSphere();
+        } else if (functionName.equals("trid")){
+            function = new FTrid();
+        } else if (functionName.equals("zakharov")) {
+            function = new FZakharov();
+        } else if (functionName.equals("schwefel")){
+            function = new FSchwefel();
         } else {
             return null;
         }
@@ -106,9 +116,29 @@ public class FunctionFactory {
         sixHumpFunctionDescription.addArgument(new FunctionArgument("x1", -3,3));
         sixHumpFunctionDescription.addArgument(new FunctionArgument("x2", -2,2));
 
+        FunctionDescription rosenbrockFunctionDescription = new FunctionDescription("Rosenbrock", FunctionArgumentsType.SameIntervals, 1);
+        rosenbrockFunctionDescription.addArgument(new FunctionArgument("all", -5.0, 10.0));
+
+        FunctionDescription sphereFunctionDescription = new FunctionDescription("Sphere", FunctionArgumentsType.SameIntervals, 1);
+        sphereFunctionDescription.addArgument(new FunctionArgument("all", -10.0, 10.0));
+
+        FunctionDescription tridFunctionDescription = new FunctionDescription("Trid", FunctionArgumentsType.SameIntervals, 1);
+        tridFunctionDescription.addArgument(new FunctionArgument("all", -5.0, 5));
+
+        FunctionDescription zakharovFunctionDescription = new FunctionDescription("Zakharov", FunctionArgumentsType.SameIntervals, 1);
+        zakharovFunctionDescription.addArgument(new FunctionArgument("all", -5.0, 10));
+
+        FunctionDescription schwefelFunctionDescription = new FunctionDescription("Schwefel", FunctionArgumentsType.SameIntervals, 1);
+        schwefelFunctionDescription.addArgument(new FunctionArgument("all", -500.0, 500.0));
+
         predefinedFunctions.add(rastriginFunctionDescription);
         predefinedFunctions.add(bealeFunctionDescription);
         predefinedFunctions.add(sixHumpFunctionDescription);
+        predefinedFunctions.add(rosenbrockFunctionDescription);
+        predefinedFunctions.add(sphereFunctionDescription);
+        predefinedFunctions.add(tridFunctionDescription);
+        predefinedFunctions.add(zakharovFunctionDescription);
+        predefinedFunctions.add(schwefelFunctionDescription);
     }
 
 }
