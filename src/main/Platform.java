@@ -32,6 +32,9 @@ public class Platform {
             case RUN:
                 commandRun(commandOptions);
                 break;
+            case EPSILON:
+                commandEpsilon(commandOptions);
+                break;
             case TOGGLE_CONSOLE_OUTPUT:
                 commandToggleConsoleOutput(commandOptions);
                 break;
@@ -53,6 +56,7 @@ public class Platform {
         if (function == null || optimizationAlgorithm == null){
             return;
         }
+        System.out.println(GlobalState.epsilon);
         optimizationAlgorithm.setFunction(function);
         int runs = commandOptions.getNumberValue("-runs:");
         GlobalState.reset();
@@ -74,6 +78,15 @@ public class Platform {
         ui.consoleOutput.addLine("Mean: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.mean, 5));
         ui.consoleOutput.addLine("Standard deviation: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.getStandardDeviation(), 5));
         ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToXDecimals(duration, 5)) + "seconds \n");
+    }
+
+    private void commandEpsilon(CommandOptions commandOptions){
+        String newValueForEpsilon = commandOptions.getStringValue("-set:");
+        try{
+            GlobalState.epsilon = Double.parseDouble(newValueForEpsilon);
+        } catch (Exception e){
+            ui.consoleOutput.addLine("Invalid value for epsilon: " + newValueForEpsilon);
+        }
     }
 
     private void commandToggleConsoleOutput(CommandOptions commandOptions){

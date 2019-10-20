@@ -23,6 +23,9 @@ public class CommandLine {
         commandDescriptions.get(commandDescriptions.size()-1).addBooleanOption("-disable-graph", false);
         commandDescriptions.get(commandDescriptions.size()-1).addStringOption("-to-file:", null);
 
+        commandDescriptions.add(new CommandDescription("epsilon", Commands.EPSILON));
+        commandDescriptions.get(commandDescriptions.size()-1).addStringOption("-set:", "0.01");
+
         commandDescriptions.add(new CommandDescription("toggle", Commands.TOGGLE_CONSOLE_OUTPUT));
 
         commandDescriptions.add(new CommandDescription("cmd", Commands.CMD));
