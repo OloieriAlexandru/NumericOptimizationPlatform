@@ -4,7 +4,6 @@ import functions.Function;
 import javafx.util.Pair;
 import main.GlobalState;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class CandidateHCSA {
@@ -16,6 +15,8 @@ public class CandidateHCSA {
     private double          currentBestValue;
     private int             argsCount;
     private Random          random;
+    private double          T;
+    private int             iteration;
 
     CandidateHCSA(Function function, int prec){
         f = function;
@@ -124,7 +125,43 @@ public class CandidateHCSA {
         return foundBetterCandidate;
     }
 
+    void simulatedAnnealingInit() {
+        T = 1000;
+        iteration = 0;
+    }
+
     boolean simulatedAnnealingExploration(){
-        return false;
+        double[]    currentDecimalRepresentation = new double[argsCount];
+        int[]       currentBitwiseRepresentation = bitwiseRepresentation.clone();
+        double      currentValue;
+        boolean     foundBetterCandidate = false;
+
+        for (int i=0;i<currentBitwiseRepresentation.length && !foundBetterCandidate;++i){
+            currentBitwiseRepresentation[i] = 1 - currentBitwiseRepresentation[i];
+
+            decodeBitwiseRepresentation(currentBitwiseRepresentation, currentDecimalRepresentation);
+            currentValue = f.evaluate(currentDecimalRepresentation);
+
+            if (GlobalState.solutionIsBetterThanBest(currentBestValue, currentValue)){
+                currentBestValue = currentValue;
+                bitwiseRepresentation = currentBitwiseRepresentation.clone();
+                decimalRepresentation = currentDecimalRepresentation.clone();
+                foundBetterCandidate = true;
+            }
+            else if (GlobalState.simulatedAnnealingSolutionIsBetterThanBest(currentBestValue, currentValue, T)){
+                currentBestValue = currentValue;
+                bitwiseRepresentation = currentBitwiseRepresentation.clone();
+                decimalRepresentation = currentDecimalRepresentation.clone();
+                foundBetterCandidate = true;
+            }
+
+            currentBitwiseRepresentation[i] = 1 - currentBitwiseRepresentation[i];
+        }
+        T *= 0.9;
+        if (++iteration > 500){
+            foundBetterCandidate = false;
+        }
+
+        return foundBetterCandidate;
     }
 }

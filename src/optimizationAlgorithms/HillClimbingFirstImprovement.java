@@ -27,7 +27,7 @@ public class HillClimbingFirstImprovement implements IOptimizationAlgorithm {
     @Override
     public double run(int generationsLimit, boolean drawGraph) {
         ArrayList<Double>       bestValues = new ArrayList<>();
-        CandidateHCSA           currentCandidate = new CandidateHCSA(f, 7);
+        CandidateHCSA           currentCandidate = new CandidateHCSA(f, 5);
         Double                  bestValue = GlobalState.getTheWorstValue();
 
         for (int i=0;i<generationsLimit;++i){

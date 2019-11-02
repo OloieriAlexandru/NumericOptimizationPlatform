@@ -8,7 +8,7 @@ import optimizationAlgorithms.OptimizationAlgorithmDescription;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Random;
 
 public class GlobalState {
     public static OptimizationAlgorithmDescription      optimizationAlgorithmDescription;
@@ -29,6 +29,7 @@ public class GlobalState {
     public static int                                   functionArguments = 5;
     public static int                                   optimizationType = 1; // 1 - minimization, 2 - maximization
     public static double                                epsilon = 0.01;
+    public static Random                                randomGen = new Random();
 
     public static void reset(){
         wasReset = true;
@@ -145,5 +146,10 @@ public class GlobalState {
             return curr < bestValue;
         }
         return curr > bestValue;
+    }
+
+    public static boolean simulatedAnnealingSolutionIsBetterThanBest(double bestValue, double curr, double T){
+        double value = randomGen.nextDouble();
+        return value < Math.exp(-Math.abs(curr - bestValue) / T);
     }
 }
