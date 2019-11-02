@@ -1,6 +1,6 @@
 package commandline;
 
-import javafx.util.Pair;
+import main.CustomPair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import java.util.Set;
 public class CommandDescription {
     private Commands                        id;
     private String                          name;
-    private ArrayList<Pair<Integer,String>> options = new ArrayList<>();
+    private ArrayList<CustomPair<Integer,String>> options = new ArrayList<>();
     private ArrayList<String>               stringDefaultValues = new ArrayList<>();
     private ArrayList<Integer>              numberDefaultValues = new ArrayList<>();
     private ArrayList<Boolean>              booleanDefaultValues = new ArrayList<>();
@@ -20,7 +20,7 @@ public class CommandDescription {
     }
 
     void addStringOption(String option, String defaultValue) {
-        options.add(new Pair<>(0, option));
+        options.add(new CustomPair(0, option));
 
         stringDefaultValues.add(defaultValue);
         numberDefaultValues.add(0);
@@ -28,7 +28,7 @@ public class CommandDescription {
     }
 
     void addNumberOption(String option, int defaultValue) {
-        options.add(new Pair<>(1, option));
+        options.add(new CustomPair(1, option));
 
         stringDefaultValues.add(null);
         numberDefaultValues.add(defaultValue);
@@ -36,7 +36,7 @@ public class CommandDescription {
     }
 
     void addBooleanOption(String option, boolean defaultValue) {
-        options.add(new Pair<>(2, option));
+        options.add(new CustomPair(2, option));
 
         stringDefaultValues.add(null);
         numberDefaultValues.add(0);

@@ -1,7 +1,7 @@
 package optimizationAlgorithms;
 
 import functions.Function;
-import javafx.util.Pair;
+import main.CustomPair;
 import main.GlobalState;
 
 import java.util.Random;
@@ -21,7 +21,7 @@ public class CandidateHCSA {
     CandidateHCSA(Function function, int prec){
         f = function;
         argsCount = function.getArgumentsCount();
-        Pair<double[],double[]> functionLimits = function.getArgumentsLimits();
+        CustomPair<double[],double[]> functionLimits = function.getArgumentsLimits();
         minValues = functionLimits.getKey();
         maxValues = functionLimits.getValue();
 

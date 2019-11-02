@@ -1,6 +1,6 @@
 package functions;
 
-import javafx.util.Pair;
+import main.CustomPair;
 import optimizationAlgorithms.CandidateHCSA;
 
 public class FSixHumpCamel extends Function {
@@ -15,7 +15,7 @@ public class FSixHumpCamel extends Function {
     }
 
     @Override
-    public Pair<double[], double[]> getArgumentsLimits() {
+    public CustomPair<double[], double[]> getArgumentsLimits() {
         int args = getArgumentsCount();
         double[]    retMin = new double[args];
         double[]    retMax = new double[args];
@@ -23,7 +23,7 @@ public class FSixHumpCamel extends Function {
             retMin[i] = minVals[i];
             retMax[i] = maxVals[i];
         }
-        return new Pair<>(retMin,retMax);
+        return new CustomPair(retMin,retMax);
     }
 
     @Override

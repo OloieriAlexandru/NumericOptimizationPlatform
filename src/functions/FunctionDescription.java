@@ -1,6 +1,6 @@
 package functions;
 
-import javafx.util.Pair;
+import main.CustomPair;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class FunctionDescription {
         return functionObject;
     }
 
-    public Pair<double[],double[]> getFunctionLimitsAsArrays(){
+    public CustomPair<double[],double[]> getFunctionLimitsAsArrays(){
         int args = arguments.size();
         double minArray[] = new double[args];
         double maxArray[] = new double[args];
@@ -41,13 +41,13 @@ public class FunctionDescription {
             minArray[i] = arguments.get(i).getMinValue();
             maxArray[i] = arguments.get(i).getMaxValue();
         }
-        return new Pair<>(minArray, maxArray);
+        return new CustomPair(minArray, maxArray);
     }
 
-    public Pair<Double, Double> getFunctionLimits(){
+    public CustomPair<Double, Double> getFunctionLimits(){
         double min = arguments.get(0).getMinValue();
         double max = arguments.get(0).getMaxValue();
-        return new Pair<>(min, max);
+        return new CustomPair(min, max);
     }
 
     public FunctionArgumentsType getArgumentsType(){

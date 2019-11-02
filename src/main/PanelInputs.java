@@ -1,7 +1,6 @@
 package main;
 
 import functions.*;
-import javafx.util.Pair;
 import optimizationAlgorithms.OptimizationAlgorithmDescription;
 import optimizationAlgorithms.OptimizationAlgorithmFactory;
 
@@ -205,7 +204,7 @@ public class PanelInputs extends JPanel {
             if (index == -1){
                 return;
             }
-            Pair<Double,Double> functionLimits = GlobalState.functionUsed.getFunction().getFunctionArgumentLimits(index);
+            CustomPair<Double,Double> functionLimits = GlobalState.functionUsed.getFunction().getFunctionArgumentLimits(index);
             functionMinValueSpinner.setValue(functionLimits.getKey());
             functionMaxValueSpinner.setValue(functionLimits.getValue());
         });
@@ -247,7 +246,7 @@ public class PanelInputs extends JPanel {
                 sameIntervalsFunctionArgumentsCountLabel.setVisible(true);
                 functionArgumentsSpinner.setVisible(true);
 
-                Pair<Double,Double> functionLimits = function.getFunctionLimits();
+                CustomPair<Double,Double> functionLimits = function.getFunctionLimits();
                 functionMinValueSpinner.setValue(functionLimits.getKey());
                 functionMaxValueSpinner.setValue(functionLimits.getValue());
             } else if (function.getArgumentsType() == FunctionArgumentsType.DifferentIntervals){
@@ -261,7 +260,7 @@ public class PanelInputs extends JPanel {
                 }
                 differentIntervalsFunctionComboBox.setSelectedIndex(0);
                 differentIntervalsFunctionComboBox.setVisible(true);
-                Pair<Double, Double> limits = function.getFunctionLimits();
+                CustomPair<Double, Double> limits = function.getFunctionLimits();
                 functionMinValueSpinner.setValue(limits.getKey());
                 functionMaxValueSpinner.setValue(limits.getValue());
             }

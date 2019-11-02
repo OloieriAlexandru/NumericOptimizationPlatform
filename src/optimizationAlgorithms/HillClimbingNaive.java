@@ -1,7 +1,7 @@
 package optimizationAlgorithms;
 
 import functions.Function;
-import javafx.util.Pair;
+import main.CustomPair;
 import main.GlobalState;
 import main.UserInterface;
 
@@ -25,7 +25,7 @@ public class HillClimbingNaive implements IOptimizationAlgorithm {
     public double run(int generationsLimit, boolean drawGraph) {
         ArrayList<Double>           bestValues = new ArrayList<>();
         Double                      bestValue = GlobalState.getTheWorstValue();
-        Pair<double[], double[]>    functionLimits = f.getArgumentsLimits();
+        CustomPair<double[], double[]> functionLimits = f.getArgumentsLimits();
         double[]                    functionMinValues = functionLimits.getKey();
         double[]                    functionMaxValues = functionLimits.getValue();
 

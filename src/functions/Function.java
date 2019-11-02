@@ -1,6 +1,6 @@
 package functions;
 
-import javafx.util.Pair;
+import main.CustomPair;
 import optimizationAlgorithms.CandidateHCSA;
 
 public abstract class Function {
@@ -16,7 +16,7 @@ public abstract class Function {
         return bitLens;
     }
 
-    public Pair<double[],double[]> getArgumentsLimits(){
+    public CustomPair<double[],double[]> getArgumentsLimits(){
         int args = getArgumentsCount();
         double[]    retMin = new double[args];
         double[]    retMax = new double[args];
@@ -24,11 +24,11 @@ public abstract class Function {
             retMin[i] = minVals[0];
             retMax[i] = maxVals[0];
         }
-        return new Pair<>(retMin,retMax);
+        return new CustomPair(retMin,retMax);
     }
 
-    public Pair<Double,Double> getFunctionArgumentLimits(int index) {
-        return new Pair<>(minVals[index], maxVals[index]);
+    public CustomPair<Double,Double> getFunctionArgumentLimits(int index) {
+        return new CustomPair(minVals[index], maxVals[index]);
     }
 
     public abstract int                getArgumentsCount();

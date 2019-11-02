@@ -1,7 +1,5 @@
 package main;
 
-import javafx.util.Pair;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -157,7 +155,7 @@ public class PanelGraph extends JPanel {
     private Set<Integer> computeSegmentsOnY(ArrayList<Double> bestCandidates, int minReq, int yBottom, double yDiff, double maxValue, double maxDiff) {
         Set<Integer> ySegments = new TreeSet<>();
 
-        ArrayList<Pair<Integer,Integer>> arrayYSegments = new ArrayList<>();
+        ArrayList<CustomPair<Integer,Integer>> arrayYSegments = new ArrayList<>();
         for (int i=0;i<bestCandidates.size();++i){
             int y;
             if (GlobalState.optimizationType == 1){
@@ -165,7 +163,7 @@ public class PanelGraph extends JPanel {
             } else {
                 y = (int)(yBottom - 10 - yDiff * (1 - (maxValue - bestCandidates.get(i)) / maxDiff));
             }
-            arrayYSegments.add(new Pair<>(y, i));
+            arrayYSegments.add(new CustomPair(y, i));
         }
         Collections.sort(arrayYSegments, (o1, o2) -> {
             if (o1.getKey().equals(o2.getKey())){

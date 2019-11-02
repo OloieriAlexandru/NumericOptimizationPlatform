@@ -1,12 +1,9 @@
 package optimizationAlgorithms;
 
 import functions.Function;
-import javafx.util.Pair;
+import main.CustomPair;
 import main.GlobalState;
 import main.UserInterface;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
     private Function f;
@@ -46,7 +43,7 @@ public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
 
         currentVariablesStates = new double[f.getArgumentsCount()];
 
-        Pair<double[], double[]> functionLimits = f.getArgumentsLimits();
+        CustomPair<double[], double[]> functionLimits = f.getArgumentsLimits();
         functionMinValues = functionLimits.getKey();
         functionMaxValues = functionLimits.getValue();
         epsilons = new double[functionMaxValues.length];

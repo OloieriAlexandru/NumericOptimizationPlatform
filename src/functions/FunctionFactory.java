@@ -1,6 +1,6 @@
 package functions;
 
-import javafx.util.Pair;
+import main.CustomPair;
 import main.PanelConsoleOutput;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class FunctionFactory {
         } else {
             return null;
         }
-        Pair<double[],double[]> functionLimits = functionDescription.getFunctionLimitsAsArrays();
+        CustomPair<double[],double[]> functionLimits = functionDescription.getFunctionLimitsAsArrays();
         function.addLimits(functionLimits.getKey(), functionLimits.getValue());
         return function;
     }

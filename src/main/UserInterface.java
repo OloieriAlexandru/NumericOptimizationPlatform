@@ -4,7 +4,6 @@ import commandline.CommandLine;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class UserInterface extends JFrame {
     PanelConsole                graphicConsole;
