@@ -15,12 +15,12 @@ public class SimulatedAnnealing implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run(boolean drawGraph) {
-        return run(GlobalState.iterationsCount, drawGraph);
+    public double run(boolean drawGraph, boolean printBestValue) {
+        return run(GlobalState.iterationsCount, drawGraph, printBestValue);
     }
 
     @Override
-    public double run(int generationsLimit, boolean drawGraph) {
+    public double run(int generationsLimit, boolean drawGraph, boolean printBestValue) {
         ArrayList<Double>       bestValues = new ArrayList<>();
         CandidateHCSA           currentCandidate = new CandidateHCSA(f, 5);
         Double                  bestValue = GlobalState.getTheWorstValue();
@@ -34,7 +34,11 @@ public class SimulatedAnnealing implements IOptimizationAlgorithm {
             bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest(), currentCandidate.getDecimalRepresentationOfBestCandidate());
 
             if (drawGraph){
-                bestValues.add(bestValue);
+                if (printBestValue){
+                    bestValues.add(bestValue);
+                } else {
+                    bestValues.add(currentCandidate.getCurrentBest());
+                }
                 ui.graph.printGenerations(bestValues, generationsLimit, 0);
             }
         }

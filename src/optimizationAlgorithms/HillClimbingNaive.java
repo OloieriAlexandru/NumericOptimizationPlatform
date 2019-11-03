@@ -17,12 +17,12 @@ public class HillClimbingNaive implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run(boolean drawGraph) {
-        return run(GlobalState.iterationsCount, drawGraph);
+    public double run(boolean drawGraph, boolean printBestValue) {
+        return run(GlobalState.iterationsCount, drawGraph, printBestValue);
     }
 
     @Override
-    public double run(int generationsLimit, boolean drawGraph) {
+    public double run(int generationsLimit, boolean drawGraph, boolean printBestValue) {
         ArrayList<Double>           bestValues = new ArrayList<>();
         Double                      bestValue = GlobalState.getTheWorstValue();
         CustomPair<double[], double[]> functionLimits = f.getArgumentsLimits();
@@ -81,7 +81,11 @@ public class HillClimbingNaive implements IOptimizationAlgorithm {
             bestValue = GlobalState.getBetterValue(bestValue, iterationBest, functionArgs);
 
             if (drawGraph){
-                bestValues.add(bestValue);
+                if (printBestValue){
+                    bestValues.add(bestValue);
+                } else {
+                    bestValues.add(iterationBest);
+                }
                 ui.graph.printGenerations(bestValues, generationsLimit, 0);
             }
         }

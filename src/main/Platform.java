@@ -56,15 +56,16 @@ public class Platform {
         if (function == null || optimizationAlgorithm == null){
             return;
         }
-        System.out.println(GlobalState.epsilon);
         optimizationAlgorithm.setFunction(function);
         int runs = commandOptions.getNumberValue("-runs:");
         GlobalState.reset();
         GlobalState.setTotalRuns(runs);
         Date start = new Date();
         ui.graph.paintBorders();
+        boolean disableGraph = !commandOptions.getBooleanValue("-disable-graph");
+        boolean printBestValue = !commandOptions.getBooleanValue("-draw-current");
         for (int i=0;i<runs;++i){
-            double curr = optimizationAlgorithm.run(!commandOptions.getBooleanValue("-disable-graph"));
+            double curr = optimizationAlgorithm.run(disableGraph, printBestValue);
             GlobalState.addResultValue(curr);
             ui.graph.printInformation();
             if (i+1 < runs){

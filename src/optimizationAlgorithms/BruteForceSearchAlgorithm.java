@@ -20,8 +20,8 @@ public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run(boolean drawGraph) {
-        return run(GlobalState.iterationsCount, drawGraph);
+    public double run(boolean drawGraph, boolean printBestValue) {
+        return run(GlobalState.iterationsCount, drawGraph, printBestValue);
     }
 
     private void recursiveBruteForceSearch(int variableIndex){
@@ -38,7 +38,7 @@ public class BruteForceSearchAlgorithm implements IOptimizationAlgorithm {
     }
 
     @Override
-    public double run(int generationsLimit, boolean drawGraph) {
+    public double run(int generationsLimit, boolean drawGraph, boolean printBestValue) {
         bruteForceSearchIterations = GlobalState.iterationsCount;
 
         currentVariablesStates = new double[f.getArgumentsCount()];

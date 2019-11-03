@@ -158,7 +158,7 @@ public class CandidateHCSA {
             currentBitwiseRepresentation[i] = 1 - currentBitwiseRepresentation[i];
         }
         T *= 0.9;
-        if (++iteration > 500){
+        if (++iteration > 1000){
             foundBetterCandidate = false;
         }
 

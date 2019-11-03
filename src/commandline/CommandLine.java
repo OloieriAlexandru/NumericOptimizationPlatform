@@ -21,6 +21,7 @@ public class CommandLine {
         commandDescriptions.add(new CommandDescription("run", Commands.RUN));
         commandDescriptions.get(commandDescriptions.size()-1).addNumberOption("-runs:", 1);
         commandDescriptions.get(commandDescriptions.size()-1).addBooleanOption("-disable-graph", false);
+        commandDescriptions.get(commandDescriptions.size()-1).addBooleanOption("-draw-current", false);
         commandDescriptions.get(commandDescriptions.size()-1).addStringOption("-to-file:", null);
 
         commandDescriptions.add(new CommandDescription("epsilon", Commands.EPSILON));
