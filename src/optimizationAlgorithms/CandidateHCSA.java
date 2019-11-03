@@ -18,6 +18,7 @@ public class CandidateHCSA {
     private double          T;
     private int             iteration;
 
+
     CandidateHCSA(Function function, int prec){
         f = function;
         argsCount = function.getArgumentsCount();

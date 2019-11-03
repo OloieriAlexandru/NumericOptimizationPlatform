@@ -1,6 +1,7 @@
 package optimizationAlgorithms;
 
 import functions.Function;
+import main.CustomPair;
 import main.GlobalState;
 import main.UserInterface;
 
@@ -27,13 +28,27 @@ public class HillClimbingFirstImprovement implements IOptimizationAlgorithm {
     @Override
     public double run(int generationsLimit, boolean drawGraph, boolean printBestValue) {
         ArrayList<Double>       bestValues = new ArrayList<>();
-        CandidateHCSA           currentCandidate = new CandidateHCSA(f, 5);
+        CandidateHCSA           currentCandidate = new CandidateHCSA(f, 0);
         Double                  bestValue = GlobalState.getTheWorstValue();
+
+        ArrayList<CustomPair<Double,Double>> solutions = new ArrayList<>();
 
         for (int i=0;i<generationsLimit;++i){
             currentCandidate.generateRandomCandidate();
 
+            double start = currentCandidate.getDecimalRepresentationOfBestCandidate()[0];
             while (currentCandidate.hillClimbingFirstImprovementExploration());
+            double end = currentCandidate.getDecimalRepresentationOfBestCandidate()[0];
+            boolean toAdd = true;
+            for (int j=0;j<solutions.size();++j){
+                if (solutions.get(j).getKey() == start){
+                    toAdd = false;
+                    break;
+                }
+            }
+            if (toAdd){
+                solutions.add(new CustomPair<>(start, end));
+            }
 
             bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest(), currentCandidate.getDecimalRepresentationOfBestCandidate());
 
@@ -45,6 +60,9 @@ public class HillClimbingFirstImprovement implements IOptimizationAlgorithm {
                 }
                 ui.graph.printGenerations(bestValues, generationsLimit, 0);
             }
+        }
+        for (CustomPair<Double,Double> sol:solutions){
+            System.out.println(sol.getKey() + " " + sol.getValue());
         }
 
         return bestValue;

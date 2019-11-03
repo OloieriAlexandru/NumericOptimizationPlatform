@@ -94,6 +94,8 @@ public class FunctionFactory {
             function = new FZakharov();
         } else if (functionName.equals("schwefel")){
             function = new FSchwefel();
+        } else if (functionName.equals("homework")) {
+            function = new FHomework();
         } else {
             return null;
         }
@@ -105,6 +107,9 @@ public class FunctionFactory {
     private static void initPredefinedFunctions(){
         predefinedFunctionInit = true;
         predefinedFunctions = new ArrayList<>();
+
+        FunctionDescription homeworkFunctionDescription = new FunctionDescription("Homework", FunctionArgumentsType.DifferentIntervals, 2);
+        homeworkFunctionDescription.addArgument(new FunctionArgument("x", 0.0, 31.0));
 
         FunctionDescription rastriginFunctionDescription = new FunctionDescription("Rastrigin", FunctionArgumentsType.SameIntervals, 1);
         rastriginFunctionDescription.addArgument(new FunctionArgument("all", -5.12,5.12));
@@ -131,6 +136,7 @@ public class FunctionFactory {
         FunctionDescription schwefelFunctionDescription = new FunctionDescription("Schwefel", FunctionArgumentsType.SameIntervals, 1);
         schwefelFunctionDescription.addArgument(new FunctionArgument("all", -500.0, 500.0));
 
+        predefinedFunctions.add(homeworkFunctionDescription);
         predefinedFunctions.add(rastriginFunctionDescription);
         predefinedFunctions.add(bealeFunctionDescription);
         predefinedFunctions.add(sixHumpFunctionDescription);
