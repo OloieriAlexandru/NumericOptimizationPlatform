@@ -48,6 +48,12 @@ public class CandidateGA {
         return decimalRepresentation;
     }
 
+    void createFromBitwiseRepresentation(int[] bitwise){
+        bitwiseRepresentation = bitwise.clone();
+        decodeBitwiseRepresentation(bitwiseRepresentation, decimalRepresentation);
+        currentBestValue = f.evaluate(decimalRepresentation);
+    }
+
     void decodeBitwiseRepresentation(int[] bitwise, double[] decimal){
         int currentStartIndex = 0;
         for (int i=0;i<argsCount;++i){
@@ -73,8 +79,7 @@ public class CandidateGA {
 
     double evaluate(){
         decodeBitwiseRepresentation(bitwiseRepresentation, decimalRepresentation);
-        double res = f.evaluate(decimalRepresentation);
-        return res;
+        return f.evaluate(decimalRepresentation);
     }
 
     void mutateCandidate(){

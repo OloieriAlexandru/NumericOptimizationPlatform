@@ -60,8 +60,8 @@ public class PopulationGA {
             return 1;
         }));
         for (int i=0;i<count;i+=2){
-            int[] bitwiseRepresentation1 = candidates.get(candidatesProbabilities.get(i).getValue()).getBitwiseRepresentation();
-            int[] bitwiseRepresentation2 = candidates.get(candidatesProbabilities.get(i+1).getValue()).getBitwiseRepresentation();
+            int[] bitwiseRepresentation1 = candidates.get(candidatesProbabilities.get(i).getValue()).getBitwiseRepresentation().clone();
+            int[] bitwiseRepresentation2 = candidates.get(candidatesProbabilities.get(i+1).getValue()).getBitwiseRepresentation().clone();
 
             int swappedBitsCount = GlobalState.randomGen.nextInt() % (bitwiseRepresentation1.length-1), aux;
             for (int j=0;j<=swappedBitsCount;++j){
@@ -69,6 +69,14 @@ public class PopulationGA {
                 bitwiseRepresentation1[j] = bitwiseRepresentation2[j];
                 bitwiseRepresentation2[j] = aux;
             }
+
+            CandidateGA c1 = new CandidateGA(f, precision);
+            c1.createFromBitwiseRepresentation(bitwiseRepresentation1);
+            CandidateGA c2 = new CandidateGA(f, precision);
+            c2.createFromBitwiseRepresentation(bitwiseRepresentation2);
+
+            candidates.add(c1);
+            candidates.add(c2);
         }
     }
 
@@ -96,22 +104,38 @@ public class PopulationGA {
         }
 
         double res = bestValue;
-        worstValue = 1.05 * worstValue;
+        worstValue = 1.1 * worstValue;
         for (int i=0;i<candidates.size();++i){
-            fitness[i] = 1.0 / (eval[i] + 0.1);//Math.abs(worstValue - eval[i])
+            fitness[i] = 1/(eval[i]+0.1); //Math.abs(worstValue - eval[i]);
             totalFitness += fitness[i];
-            wheel[i] = (i > 0 ? wheel[i-1] : 0) + fitness[i];
         }
 
         for (int i=0;i<candidates.size();++i){
-            double curr = GlobalState.randomGen.nextDouble() * totalFitness;
-            int chosen = 0;
-            for (int j=wheel.length-1;j>=0;--j){
+            wheel[i] = (i > 0 ? wheel[i-1] : 0) + fitness[i] / totalFitness;
+        }
+
+        for (int i=0;i<GlobalState.populationSize - 6;++i){
+            double curr = GlobalState.randomGen.nextDouble() * wheel[wheel.length-1];
+            int chosen = wheel.length-1;
+            for (int j=wheel.length-2;j>=0;--j){
                 if (wheel[j] < curr){
                     chosen = j;
                     break;
                 }
             }
+            newCandidates.add(new CandidateGA(candidates.get(chosen)));
+        }
+
+        for (int i=0;i<6;++i){
+            double best = fitness[0];
+            int chosen = 0;
+            for (int j=1;j<fitness.length;++j){
+                if (fitness[j] > best){
+                    best = fitness[j];
+                    chosen = j;
+                }
+            }
+            fitness[chosen] = 0.0;
             newCandidates.add(new CandidateGA(candidates.get(chosen)));
         }
 
