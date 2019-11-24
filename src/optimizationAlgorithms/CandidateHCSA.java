@@ -7,7 +7,7 @@ import main.GlobalState;
 import java.util.Random;
 
 public class CandidateHCSA {
-    private Function f;
+    private Function        f;
     private int[]           bitwiseRepresentation;
     private int[]           bitLens;
     private double[]        decimalRepresentation;

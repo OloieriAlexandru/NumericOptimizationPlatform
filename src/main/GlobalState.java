@@ -30,6 +30,9 @@ public class GlobalState {
     public static int                                   optimizationType = 1; // 1 - minimization, 2 - maximization
     public static double                                epsilon = 0.01;
     public static Random                                randomGen = new Random();
+    public static double                                mutationProbability = 0.01;
+    public static double                                crossOverProbability = 0.3;
+    public static int                                   populationSize = 100;
 
     public static void reset(){
         wasReset = true;
@@ -130,12 +133,30 @@ public class GlobalState {
         if (optimizationType == 1){
             if (currentBest < ans){
                 ans = currentBest;
-                updateBestValueArgumentsArray(args);
+                if (args != null){
+                    updateBestValueArgumentsArray(args);
+                }
             }
         } else {
             if (currentBest > ans) {
                 ans = currentBest;
-                updateBestValueArgumentsArray(args);
+                if (args != null){
+                    updateBestValueArgumentsArray(args);
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static double getWorseValue(double worstValue, double value){
+        double ans = worstValue;
+        if (optimizationType == 1){
+            if (value > ans){
+                ans = value;
+            }
+        } else {
+            if (value < ans){
+                ans = value;
             }
         }
         return ans;

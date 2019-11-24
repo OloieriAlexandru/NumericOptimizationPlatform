@@ -6,13 +6,11 @@ import main.UserInterface;
 
 import java.util.ArrayList;
 
-public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
+public class GeneticAlgorithm implements IOptimizationAlgorithm {
     private Function                f;
     private UserInterface           ui;
 
-    HillClimbingBestImprovement(UserInterface userInterface){
-        ui = userInterface;
-    }
+    GeneticAlgorithm(UserInterface userInterface){ ui = userInterface; }
 
     @Override
     public double run(boolean drawGraph, boolean printBestValue) {
@@ -21,22 +19,24 @@ public class HillClimbingBestImprovement implements IOptimizationAlgorithm {
 
     @Override
     public double run(int generationsLimit, boolean drawGraph, boolean printBestValue) {
-        ArrayList<Double>       bestValues = new ArrayList<>();
-        CandidateHCSA           currentCandidate = new CandidateHCSA(f, 5);
-        Double                  bestValue = GlobalState.getTheWorstValue();
 
-        for (int i=0;i<generationsLimit;++i){
-            currentCandidate.generateRandomCandidate();
+        double bestValue = GlobalState.getTheWorstValue();
+        ArrayList<Double> bestValues = new ArrayList<>();
+        PopulationGA population = new PopulationGA(f, 5);
+        population.initializePopulation();
 
-            while (currentCandidate.hillClimbingBestImprovementExploration());
+        for (int i=2;i<=generationsLimit;++i){
+            population.mutatePopulation();
+            population.crossOverPopulation();
 
-            bestValue = GlobalState.getBetterValue(bestValue, currentCandidate.getCurrentBest(), currentCandidate.getDecimalRepresentationOfBestCandidate());
+            double currValue = population.selection();
+            bestValue = GlobalState.getBetterValue(bestValue, currValue, population.getDecimalRepresentationOfBestCandidate());
 
             if (drawGraph){
                 if (printBestValue){
                     bestValues.add(bestValue);
                 } else {
-                    bestValues.add(currentCandidate.getCurrentBest());
+                    bestValues.add(currValue);
                 }
                 ui.graph.printGenerations(bestValues, generationsLimit, 0);
             }

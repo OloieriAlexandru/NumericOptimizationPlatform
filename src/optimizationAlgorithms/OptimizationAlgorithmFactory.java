@@ -48,14 +48,12 @@ public class OptimizationAlgorithmFactory {
 
     private static void initOptimizationAlgorithms() {
         optimizationAlgorithmsInit = true;
+        optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Genetic Algorithm", "Genetic Algorithm", new GeneticAlgorithm(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Hill Climbing - First Improvement", "Hill Climbing - FI", new HillClimbingFirstImprovement(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Hill Climbing - Best Improvement", "Hill Climbing - BI", new HillClimbingBestImprovement(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Simulated Annealing", "Simulated Annealing", new SimulatedAnnealing(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Hill Climbing - Naive", "Naive Hill Climbing", new HillClimbingNaive(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Random Search Algorithm", "Random Search", new RandomSearchAlgorithm(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Brute Force Search Algorithm", "Brute Force Search", new BruteForceSearchAlgorithm(ui)));
-
-        //optimizationAlgorithms.add("Simulated Annealing");
-        //optimizationAlgorithms.add("Genetic Algorithm");
     }
 }
