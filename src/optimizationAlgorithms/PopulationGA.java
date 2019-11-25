@@ -106,7 +106,8 @@ public class PopulationGA {
         double res = bestValue;
         worstValue = 1.1 * worstValue;
         for (int i=0;i<candidates.size();++i){
-            fitness[i] = 1/(eval[i]+0.1); //Math.abs(worstValue - eval[i]);
+            fitness[i] = 1/(eval[i]+0.1);
+            //fitness[i] = Math.abs(worstValue - eval[i]);
             totalFitness += fitness[i];
         }
 

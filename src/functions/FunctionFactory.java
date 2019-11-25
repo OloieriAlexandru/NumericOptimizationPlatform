@@ -72,28 +72,30 @@ public class FunctionFactory {
         return null;
     }
 
-    private static Function getClonedFunction(FunctionDescription functionDescription){
-        if (functionDescription == null){
+    private static Function getClonedFunction(FunctionDescription functionDescription) {
+        if (functionDescription == null) {
             return null;
         }
         String functionName = functionDescription.getName().toLowerCase();
         Function function;
-        if (functionName.equals("rastrigin")){
+        if (functionName.equals("rastrigin")) {
             function = new FRastrigin();
-        } else if (functionName.equals("beale")){
+        } else if (functionName.equals("beale")) {
             function = new FBeale();
-        } else if (functionName.equals("sixhump")){
+        } else if (functionName.equals("sixhump")) {
             function = new FSixHumpCamel();
-        } else if (functionName.equals("rosenbrock")){
+        } else if (functionName.equals("rosenbrock")) {
             function = new FRosenbrock();
-        } else if (functionName.equals("sphere")){
+        } else if (functionName.equals("sphere")) {
             function = new FSphere();
-        } else if (functionName.equals("trid")){
+        } else if (functionName.equals("trid")) {
             function = new FTrid();
         } else if (functionName.equals("zakharov")) {
             function = new FZakharov();
-        } else if (functionName.equals("schwefel")){
+        } else if (functionName.equals("schwefel")) {
             function = new FSchwefel();
+        } else if (functionName.equals("griewank")){
+            function = new FGriewank();
         } else {
             return null;
         }
@@ -131,7 +133,11 @@ public class FunctionFactory {
         FunctionDescription schwefelFunctionDescription = new FunctionDescription("Schwefel", FunctionArgumentsType.SameIntervals, 1);
         schwefelFunctionDescription.addArgument(new FunctionArgument("all", -500.0, 500.0));
 
+        FunctionDescription griewankFunctionDescription = new FunctionDescription("Griewank", FunctionArgumentsType.SameIntervals, 1);
+        griewankFunctionDescription.addArgument(new FunctionArgument("all", -600.0, 600.0));
+
         predefinedFunctions.add(rastriginFunctionDescription);
+        predefinedFunctions.add(griewankFunctionDescription);
         predefinedFunctions.add(bealeFunctionDescription);
         predefinedFunctions.add(sixHumpFunctionDescription);
         predefinedFunctions.add(rosenbrockFunctionDescription);
