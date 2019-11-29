@@ -64,6 +64,10 @@ public class Platform {
         ui.graph.paintBorders();
         boolean disableGraph = !commandOptions.getBooleanValue("-disable-graph");
         boolean printBestValue = !commandOptions.getBooleanValue("-draw-current");
+        if (GlobalState.optimizationAlgorithmDescription.getLongName().equals("Optimized Genetic Algorithm")){
+            GeneticAlgorithmOptimized.totalGenerationsSum = 0;
+            GeneticAlgorithmOptimized.totalRuns = 0;
+        }
         for (int i=0;i<runs;++i){
             double curr = optimizationAlgorithm.run(disableGraph, printBestValue);
             GlobalState.addResultValue(curr);
@@ -78,7 +82,11 @@ public class Platform {
         ui.consoleOutput.addLine("Worst value found: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.worstValue, 5));
         ui.consoleOutput.addLine("Mean: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.mean, 5));
         ui.consoleOutput.addLine("Standard deviation: " + GlobalState.roundDoubleValueToXDecimals(GlobalState.getStandardDeviation(), 5));
-        ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToXDecimals(duration, 5)) + "seconds \n");
+        ui.consoleOutput.addLine("Duration: " + Double.toString(GlobalState.roundDoubleValueToXDecimals(duration, 5)) + "seconds");
+        if (GlobalState.optimizationAlgorithmDescription.getLongName().equals("Optimized Genetic Algorithm")) {
+            double mean = (double)GeneticAlgorithmOptimized.totalGenerationsSum / GeneticAlgorithmOptimized.totalRuns;
+            ui.consoleOutput.addLine("Generations mean: " + Double.toString(GlobalState.roundDoubleValueToTwoDecimals(mean))+ "\n");
+        }
     }
 
     private void commandEpsilon(CommandOptions commandOptions){

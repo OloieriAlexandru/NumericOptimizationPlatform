@@ -31,8 +31,11 @@ public class GlobalState {
     public static double                                epsilon = 0.01;
     public static Random                                randomGen = new Random();
     public static double                                mutationProbability = 0.001;
+    public static double                                hypermutationProbability = 0.4;
     public static double                                crossOverProbability = 0.3;
     public static int                                   populationSize = 100;
+    public static int                                   genLimit = 3500;
+    public static int                                   elitismCount = 6;
 
     public static void reset(){
         wasReset = true;

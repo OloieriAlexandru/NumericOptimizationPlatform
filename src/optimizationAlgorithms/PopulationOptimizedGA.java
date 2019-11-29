@@ -7,23 +7,33 @@ import main.GlobalState;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PopulationGA {
-    Function                    f;
-    int                         precision;
-    ArrayList<CandidateGA>      candidates;
-    double[]                    decimalRepresentationOfBest;
+public class PopulationOptimizedGA {
+    Function f;
+    private int                         precision;
+    private ArrayList<CandidateGA>      candidates;
+    private double[]                    decimalRepresentationOfBest;
+    private double                      bestFoundValue;
 
-    PopulationGA(Function function, int p){
+    PopulationOptimizedGA(Function function, int p){
         f = function;
         precision = p;
     }
 
+    void updateBestFoundValue(double value, double[] decimalRepresentation){
+        if (GlobalState.solutionIsBetterThanBest(bestFoundValue, value)){
+            bestFoundValue = value;
+            decimalRepresentationOfBest = decimalRepresentation.clone();
+        }
+    }
+
     void initializePopulation() {
         candidates = new ArrayList<>();
-        for (int i=0;i<GlobalState.populationSize;++i){
+        bestFoundValue = GlobalState.getTheWorstValue();
+        for (int i = 0; i<GlobalState.populationSize; ++i){
             CandidateGA currentCandidate = new CandidateGA(f, precision);
             currentCandidate.generateRandomCandidate();
             candidates.add(currentCandidate);
+            updateBestFoundValue(currentCandidate.evaluate(), currentCandidate.getDecimalRepresentationOfBestCandidate());
         }
     }
 
@@ -86,15 +96,12 @@ public class PopulationGA {
         double[] eval = new double[candidates.size()];
         double[] wheel = new double[candidates.size()];
         double totalFitness = 0;
-        double bestValue = GlobalState.getTheWorstValue();
         double worstValue = 0.0;
 
         for (int i=0;i<candidates.size();++i){
             double curr = candidates.get(i).evaluate();
-            if (GlobalState.solutionIsBetterThanBest(bestValue, curr)){
-                bestValue = curr;
-                decimalRepresentationOfBest = candidates.get(i).getDecimalRepresentationOfBestCandidate().clone();
-            }
+            updateBestFoundValue(curr, candidates.get(i).getDecimalRepresentationOfBestCandidate());
+
             if (i == 0){
                 worstValue = curr;
             } else {
@@ -103,7 +110,6 @@ public class PopulationGA {
             eval[i] = curr;
         }
 
-        double res = bestValue;
         worstValue = 1.1 * worstValue;
         for (int i=0;i<candidates.size();++i){
             fitness[i] = 1/(eval[i]+0.1);
@@ -115,7 +121,7 @@ public class PopulationGA {
             wheel[i] = (i > 0 ? wheel[i-1] : 0) + fitness[i] / totalFitness;
         }
 
-        for (int i=0;i<GlobalState.populationSize - 6;++i){
+        for (int i=0;i<GlobalState.populationSize - GlobalState.elitismCount;++i){
             double curr = GlobalState.randomGen.nextDouble() * wheel[wheel.length-1];
             int chosen = wheel.length-1;
             for (int j=wheel.length-2;j>=0;--j){
@@ -127,7 +133,7 @@ public class PopulationGA {
             newCandidates.add(new CandidateGA(candidates.get(chosen)));
         }
 
-        for (int i=0;i<6;++i){
+        for (int i=0;i<GlobalState.elitismCount;++i){
             double best = fitness[0];
             int chosen = 0;
             for (int j=1;j<fitness.length;++j){
@@ -141,7 +147,23 @@ public class PopulationGA {
         }
 
         candidates = newCandidates;
-        return res;
+        return bestFoundValue;
+    }
+
+    CandidateGA getBestCandidate(){
+        if (candidates.size() == 0){
+            return null;
+        }
+        int bestIndex = 0;
+        double bestResult = candidates.get(0).evaluate();
+        for (int i=1;i<candidates.size();++i){
+            double value = candidates.get(i).evaluate();
+            if (GlobalState.solutionIsBetterThanBest(bestResult, value)){
+                bestResult = value;
+                bestIndex = i;
+            }
+        }
+        return candidates.get(bestIndex);
     }
 
     double[] getDecimalRepresentationOfBestCandidate(){

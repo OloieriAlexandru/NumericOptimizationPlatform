@@ -42,7 +42,19 @@ public class CandidateGA {
         this.currentBestValue = other.currentBestValue;
     }
 
+    Function getFunction() { return f; }
+
     int[] getBitwiseRepresentation() { return bitwiseRepresentation; }
+
+    int[] getBitLens() { return bitLens; }
+
+    double[] getDecimalRepresentation() { return decimalRepresentation; }
+
+    double[] getMinValues() { return minValues; }
+
+    double[] getMaxValues() { return maxValues; }
+
+    int getArgsCount() { return argsCount; }
 
     double[] getDecimalRepresentationOfBestCandidate() {
         return decimalRepresentation;

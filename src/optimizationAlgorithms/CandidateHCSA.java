@@ -38,6 +38,24 @@ public class CandidateHCSA {
         random = new Random();
     }
 
+    CandidateHCSA(CandidateGA candidate){
+        f = candidate.getFunction();
+        argsCount = candidate.getArgsCount();
+
+        minValues = candidate.getMinValues();
+        maxValues = candidate.getMaxValues();
+
+        bitLens = candidate.getBitLens();
+
+        bitwiseRepresentation = candidate.getBitwiseRepresentation();
+        decimalRepresentation = candidate.getDecimalRepresentation();
+
+        random = new Random();
+
+        decodeBitwiseRepresentation(bitwiseRepresentation, decimalRepresentation);
+        currentBestValue = f.evaluate(decimalRepresentation);
+    }
+
     public static int calculateBitLen(double minValue, double maxValue, int precision){
         double value = (maxValue - minValue) * Math.pow(10.0, (double)precision);
         double toCeil = Math.log(value) / Math.log(2.0);

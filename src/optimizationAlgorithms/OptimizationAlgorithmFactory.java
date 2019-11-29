@@ -49,6 +49,7 @@ public class OptimizationAlgorithmFactory {
     private static void initOptimizationAlgorithms() {
         optimizationAlgorithmsInit = true;
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Genetic Algorithm", "Genetic Algorithm", new GeneticAlgorithm(ui)));
+        optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Optimized Genetic Algorithm", "Optimized Genetic Algorithm", new GeneticAlgorithmOptimized(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Hill Climbing - First Improvement", "Hill Climbing - FI", new HillClimbingFirstImprovement(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Hill Climbing - Best Improvement", "Hill Climbing - BI", new HillClimbingBestImprovement(ui)));
         optimizationAlgorithms.add(new OptimizationAlgorithmDescription("Simulated Annealing", "Simulated Annealing", new SimulatedAnnealing(ui)));
